@@ -4,10 +4,14 @@
  * 覆盖爱快4.0全部40个API模块的所有操作
  *
  * 环境变量:
- *   IKUAI_HOST   路由器IP，默认 192.168.1.1
- *   IKUAI_USER   用户名，默认 admin
- *   IKUAI_PASS   密码（明文，自动MD5加密）
- *   IKUAI_PORT   端口，默认 80
+ *   IKUAI_HOST    路由器IP，默认 192.168.1.1
+ *   IKUAI_USER    用户名，默认 admin
+ *   IKUAI_PASS    密码（明文，自动MD5加密）
+ *   IKUAI_PORT    端口，默认随scheme（http=80, https=443）
+ *   IKUAI_SCHEME  http 或 https。默认 http；传 IKUAI_TOKEN 时强制 https
+ *   IKUAI_TOKEN   爱快 4.0 Open API 静态令牌。设置后跳过登录、直接以
+ *                 Authorization: Bearer <TOKEN> 调用 /api/v4.0/*（需HTTPS）
+ *   IKUAI_INSECURE_TLS  设为 1 时忽略自签证书校验（默认忽略）
  */
 
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
@@ -20,17 +24,31 @@ import crypto from "crypto";
 
 // ─── 配置 ────────────────────────────────────────────────────────────────────
 const HOST = process.env.IKUAI_HOST || "192.168.1.1";
-const PORT = process.env.IKUAI_PORT || "80";
+const STATIC_TOKEN = process.env.IKUAI_TOKEN || "";
+const SCHEME = (process.env.IKUAI_SCHEME || (STATIC_TOKEN ? "https" : "http")).toLowerCase();
+const PORT = process.env.IKUAI_PORT || (SCHEME === "https" ? "443" : "80");
 const USERNAME = process.env.IKUAI_USER || "admin";
 const PASSWORD = process.env.IKUAI_PASS || "";
-const BASE = `http://${HOST}:${PORT}`;
+const BASE = `${SCHEME}://${HOST}:${PORT}`;
 const API = `${BASE}/api/v4.0`;
+const INSECURE_TLS = (process.env.IKUAI_INSECURE_TLS ?? "1") === "1";
 
-let _token = null;
-let _tokenExp = 0;
+// 自签证书的iKuai管理面板默认走HTTPS需要忽略校验
+if (SCHEME === "https" && INSECURE_TLS) {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+}
+
+let _token = STATIC_TOKEN || null;
+let _tokenExp = STATIC_TOKEN ? Number.MAX_SAFE_INTEGER : 0;
+const _isStatic = !!STATIC_TOKEN;
 
 // ─── 认证 ─────────────────────────────────────────────────────────────────────
 async function login() {
+  if (_isStatic) {
+    _token = STATIC_TOKEN;
+    _tokenExp = Number.MAX_SAFE_INTEGER;
+    return;
+  }
   const md5 = crypto.createHash("md5").update(PASSWORD).digest("hex");
   // 尝试4.0接口
   try {
@@ -67,7 +85,7 @@ async function req(method, path, body) {
   };
   if (body !== undefined) opts.body = JSON.stringify(body);
   const r = await fetch(`${API}${path}`, opts);
-  if (r.status === 401) { _token = null; return req(method, path, body); }
+  if (r.status === 401 && !_isStatic) { _token = null; return req(method, path, body); }
   const text = await r.text();
   try { return JSON.parse(text); } catch { return { raw: text }; }
 }

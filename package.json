@@ -1,7 +1,7 @@
 {
   "name": "ikuai-mcp",
-  "version": "2.0.0",
-  "description": "iKuai Router MCP Server — 爱快路由器AI管理工具，覆盖全部API",
+  "version": "2.1.0",
+  "description": "iKuai Router MCP Server — 爱快路由器AI管理工具，覆盖全部API（126个工具）",
   "type": "module",
   "main": "server.js",
   "bin": {
@@ -13,7 +13,13 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "keywords": ["ikuai", "mcp", "router", "homelab", "ai"],
+  "keywords": ["ikuai", "mcp", "router", "homelab", "ai", "claude", "mcp-server"],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zshleon/ikuai-mcp.git"
+  },
+  "homepage": "https://github.com/zshleon/ikuai-mcp#readme",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0"
   }

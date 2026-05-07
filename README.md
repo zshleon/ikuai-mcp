@@ -2,7 +2,7 @@
 
 爱快路由器 (iKuai 4.0) 的 MCP Server，让 Claude Code 等 AI CLI 工具通过自然语言管理路由器。
 
-**覆盖爱快4.0全部40个API模块，共120+个工具。**
+**覆盖爱快4.0全部40个API模块，共126个工具。**
 
 ## 功能一览
 
@@ -16,14 +16,36 @@
 | NAT规则 | 4 | 高级NAT策略 |
 | 路由分流 | 16 | 域名/协议/五元组/静态路由 |
 | WAN/LAN接口 | 4 | 接口配置查看与修改 |
-| 系统管理 | 14 | 备份、固件、CPU模式、SSH、内核参数 |
+| 系统管理 | 14 | 备份、固件、CPU模式、SSH、内核参数、SNMP |
 | 日志 | 6 | 系统/ARP/DHCP/操作日志 |
 
-## 快速开始
+## 认证方式
 
-### 方式一：npx 直接运行（推荐）
+iKuai MCP 支持两种认证方式，推荐使用 **Open API Token**（更安全稳定）。
 
-在 Claude Code 配置文件（通常是 `~/.claude.json`）中加入：
+### 方式 A：Open API Token（推荐）
+
+iKuai 4.0 支持静态 Bearer Token，在路由器管理界面 **系统管理 → Open API** 中生成。
+Token 认证不依赖用户名密码，适合自动化场景。
+
+```json
+{
+  "mcpServers": {
+    "ikuai": {
+      "command": "npx",
+      "args": ["github:zshleon/ikuai-mcp"],
+      "env": {
+        "IKUAI_HOST": "192.168.1.1",
+        "IKUAI_TOKEN": "你的OpenAPI令牌"
+      }
+    }
+  }
+}
+```
+
+> 使用 Token 时会自动切换为 HTTPS，并忽略自签证书校验。
+
+### 方式 B：用户名密码
 
 ```json
 {
@@ -41,20 +63,67 @@
 }
 ```
 
-### 方式二：克隆后本地运行
+## 快速开始
+
+### npx 直接运行（推荐，无需克隆）
+
+将上方任意认证方式的配置加入对应 AI CLI 的配置文件即可。
+
+#### Claude Code（`~/.claude.json`）
+
+```json
+{
+  "mcpServers": {
+    "ikuai": {
+      "command": "npx",
+      "args": ["github:zshleon/ikuai-mcp"],
+      "env": {
+        "IKUAI_HOST": "192.168.1.1",
+        "IKUAI_TOKEN": "你的OpenAPI令牌"
+      }
+    }
+  }
+}
+```
+
+#### Gemini CLI（`~/.gemini/settings.json`）
+
+```json
+{
+  "mcpServers": {
+    "ikuai": {
+      "command": "npx",
+      "args": ["github:zshleon/ikuai-mcp"],
+      "env": {
+        "IKUAI_HOST": "192.168.1.1",
+        "IKUAI_TOKEN": "你的OpenAPI令牌"
+      }
+    }
+  }
+}
+```
+
+#### OpenAI Codex CLI（`~/.codex/config.toml`）
+
+```toml
+[mcp_servers.ikuai]
+command = "npx"
+args = ["github:zshleon/ikuai-mcp"]
+
+[mcp_servers.ikuai.env]
+IKUAI_HOST = "192.168.1.1"
+IKUAI_TOKEN = "你的OpenAPI令牌"
+```
+
+### 本地克隆运行
 
 ```bash
 git clone https://github.com/zshleon/ikuai-mcp.git
 cd ikuai-mcp
 npm install
-
-# 配置环境变量
-export IKUAI_HOST=192.168.1.1
-export IKUAI_USER=admin
-export IKUAI_PASS=你的密码
 ```
 
-Claude Code 配置：
+配置（以 Claude Code 为例）：
 
 ```json
 {
@@ -64,8 +133,7 @@ Claude Code 配置：
       "args": ["/path/to/ikuai-mcp/server.js"],
       "env": {
         "IKUAI_HOST": "192.168.1.1",
-        "IKUAI_USER": "admin",
-        "IKUAI_PASS": "你的密码"
+        "IKUAI_TOKEN": "你的OpenAPI令牌"
       }
     }
   }
@@ -76,14 +144,17 @@ Claude Code 配置：
 
 | 变量 | 说明 | 默认值 |
 |------|------|--------|
-| `IKUAI_HOST` | 路由器IP | `192.168.1.1` |
-| `IKUAI_PORT` | 管理端口 | `80` |
-| `IKUAI_USER` | 用户名 | `admin` |
+| `IKUAI_HOST` | 路由器IP或域名 | `192.168.1.1` |
+| `IKUAI_PORT` | 管理端口 | `80`（HTTP）或 `443`（HTTPS） |
+| `IKUAI_USER` | 用户名（密码认证时使用） | `admin` |
 | `IKUAI_PASS` | 密码（明文，自动MD5加密） | — |
+| `IKUAI_TOKEN` | Open API 静态令牌（推荐）。设置后跳过登录，直接以 Bearer Token 认证 | — |
+| `IKUAI_SCHEME` | `http` 或 `https`，设置 Token 时自动切换为 `https` | `http` |
+| `IKUAI_INSECURE_TLS` | 设为 `1` 时忽略自签证书错误 | `1` |
 
 ## 使用示例
 
-启动 Claude Code 后，直接用中文指令：
+启动 Claude Code 后，直接用自然语言操作路由器：
 
 ```
 # 监控
@@ -117,13 +188,17 @@ WAN1和WAN2都正常吗？
 ## 注意事项
 
 - **仅支持爱快 4.0**，API路径为 `/api/v4.0/`，3.x版本不兼容
-- 密码通过环境变量传入，服务端自动MD5加密，不存储明文
-- JWT Token 有效期约1小时，过期自动续签
-- 写操作（限速、封禁、端口映射等）会立即生效，请谨慎操作
+- Open API Token 在路由器管理页面 **系统管理 → Open API** 中生成
+- 密码认证时，密码通过环境变量传入，服务端自动MD5加密，不存储明文
+- JWT Token（密码认证）有效期约1小时，过期自动续签
+- **写操作（限速、封禁、端口映射等）会立即生效，请谨慎操作**
 - 建议重要变更前先调用 `system_backup_create` 备份配置
 
-## 需求
+## 系统要求
 
 - Node.js >= 18
-- 爱快路由器 4.0 版本
-- Claude Code 或其他支持 MCP 的 AI CLI
+- 爱快路由器 4.0
+
+## License
+
+MIT
