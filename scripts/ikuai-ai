@@ -1,0 +1,180 @@
+#!/usr/bin/env python3
+"""On-demand iKuai API helper for AI agents.
+
+This helper is intentionally not an MCP server. It lets an AI inspect iKuai only
+when asked, without adding hundreds of router tools to every default session.
+"""
+import argparse
+import json
+import os
+import ssl
+import sys
+import urllib.parse
+import urllib.request
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+TOOLS_PATH = Path(os.environ.get('IKUAI_TOOLS_PATH') or ROOT / 'tools.json')
+GEMINI_SETTINGS = Path(os.environ.get('GEMINI_SETTINGS') or Path.home() / '.gemini' / 'settings.json')
+HERMES_CONFIG = Path(os.environ.get('HERMES_CONFIG') or Path.home() / '.hermes' / 'config.yaml')
+
+
+def load_tools():
+    data = json.loads(TOOLS_PATH.read_text())
+    return {t['name']: t for t in data}
+
+
+def load_env():
+    env = {}
+    if GEMINI_SETTINGS.exists():
+        try:
+            settings = json.loads(GEMINI_SETTINGS.read_text())
+            cfg = (settings.get('mcpServers', {}).get('ikuai')
+                   or settings.get('_disabled_mcpServers', {}).get('ikuai')
+                   or {})
+            env.update(cfg.get('env') or {})
+        except Exception:
+            pass
+    if (not env.get('IKUAI_TOKEN')) and HERMES_CONFIG.exists():
+        try:
+            import yaml
+            cfg = yaml.safe_load(HERMES_CONFIG.read_text()) or {}
+            ikuai = ((cfg.get('mcp_servers') or {}).get('ikuai')
+                     or (cfg.get('_disabled_mcp_servers') or {}).get('ikuai')
+                     or {})
+            env.update(ikuai.get('env') or {})
+        except Exception:
+            pass
+    for key in ('IKUAI_HOST', 'IKUAI_TOKEN', 'IKUAI_SCHEME', 'IKUAI_PORT'):
+        if os.environ.get(key):
+            env[key] = os.environ[key]
+    return env
+
+
+def api_base(env):
+    host = env.get('IKUAI_HOST') or '192.168.1.1'
+    scheme = (env.get('IKUAI_SCHEME') or ('https' if env.get('IKUAI_TOKEN') else 'http')).lower()
+    port = env.get('IKUAI_PORT') or ('443' if scheme == 'https' else '80')
+    return f'{scheme}://{host}:{port}/api/v4.0'
+
+
+def haystack(tool):
+    meta = tool.get('_meta') or {}
+    return ' '.join(str(x or '') for x in [tool.get('name'), tool.get('description'), meta.get('method'), meta.get('path')]).lower()
+
+
+def cmd_search(args):
+    tools = load_tools()
+    query = (args.query or '').lower()
+    rows = [tool for tool in tools.values() if not query or query in haystack(tool)]
+    rows = rows[:args.limit]
+    for tool in rows:
+        meta = tool.get('_meta') or {}
+        print(json.dumps({
+            'name': tool.get('name'),
+            'method': meta.get('method'),
+            'path': meta.get('path'),
+            'description': tool.get('description'),
+            'pathParams': meta.get('pathParams') or [],
+            'queryParams': meta.get('queryParams') or [],
+            'hasBody': bool(meta.get('hasBody')),
+        }, ensure_ascii=False))
+    print(json.dumps({'returned': len(rows), 'totalAvailable': len(tools)}, ensure_ascii=False), file=sys.stderr)
+
+
+def request(method, path, body=None):
+    env = load_env()
+    token = env.get('IKUAI_TOKEN')
+    if not token:
+        raise SystemExit('IKUAI_TOKEN not found. Set it in the environment or saved Gemini/Hermes config.')
+    url = api_base(env) + path
+    data = None if body is None else json.dumps(body, ensure_ascii=False).encode()
+    req = urllib.request.Request(url, data=data, method=method.upper())
+    req.add_header('Content-Type', 'application/json')
+    req.add_header('Authorization', f'Bearer {token}')
+    ctx = ssl._create_unverified_context()
+    try:
+        with urllib.request.urlopen(req, context=ctx, timeout=30) as resp:
+            text = resp.read().decode('utf-8', errors='replace')
+    except urllib.error.HTTPError as exc:
+        text = exc.read().decode('utf-8', errors='replace')
+        raise SystemExit(json.dumps({'httpStatus': exc.code, 'error': text}, ensure_ascii=False, indent=2))
+    try:
+        return json.loads(text)
+    except Exception:
+        return {'raw': text}
+
+
+def build_tool_request(tool, args):
+    meta = tool.get('_meta') or {}
+    method = (meta.get('method') or 'get').upper()
+    req_path = meta.get('path') or ''
+    if req_path.startswith('/api/v4.0/'):
+        req_path = req_path[len('/api/v4.0'):]
+    call_args = dict(args or {})
+    for name in meta.get('pathParams') or []:
+        if name not in call_args:
+            raise SystemExit(f'missing path param: {name}')
+        req_path = req_path.replace('{' + name + '}', urllib.parse.quote(str(call_args.pop(name))))
+    query = {}
+    for name in meta.get('queryParams') or []:
+        if name in call_args:
+            query[name] = call_args.pop(name)
+    qs = urllib.parse.urlencode(query, doseq=True)
+    if qs:
+        req_path += '?' + qs
+    body = None
+    if method not in ('GET', 'DELETE') and meta.get('hasBody'):
+        body = call_args.get('body') if set(call_args.keys()) == {'body'} else call_args
+    return method, req_path, body
+
+
+def cmd_call(args):
+    tools = load_tools()
+    if args.tool not in tools:
+        raise SystemExit(f'unknown tool: {args.tool}; run: ikuai-ai search <keyword>')
+    call_args = json.loads(args.arguments) if args.arguments else {}
+    method, path, body = build_tool_request(tools[args.tool], call_args)
+    print(json.dumps(request(method, path, body), ensure_ascii=False, indent=2))
+
+
+def cmd_raw(args):
+    path = args.path
+    if path.startswith('/api/v4.0/'):
+        path = path[len('/api/v4.0'):]
+    if not path.startswith('/'):
+        raise SystemExit('path must start with /')
+    query = json.loads(args.query) if args.query else {}
+    if query:
+        path += '?' + urllib.parse.urlencode(query, doseq=True)
+    body = json.loads(args.body) if args.body else None
+    print(json.dumps(request(args.method, path, body), ensure_ascii=False, indent=2))
+
+
+def main():
+    parser = argparse.ArgumentParser(description='On-demand iKuai API helper for AI agents')
+    sub = parser.add_subparsers(dest='cmd', required=True)
+
+    search = sub.add_parser('search', help='search generated iKuai API tools')
+    search.add_argument('query', nargs='?', default='')
+    search.add_argument('--limit', type=int, default=30)
+    search.set_defaults(func=cmd_search)
+
+    call = sub.add_parser('call', help='call by generated tool name')
+    call.add_argument('tool')
+    call.add_argument('arguments', nargs='?', help='JSON arguments, for example {"id":1}')
+    call.set_defaults(func=cmd_call)
+
+    raw = sub.add_parser('raw', help='call a raw /api/v4.0 path')
+    raw.add_argument('method')
+    raw.add_argument('path')
+    raw.add_argument('--query')
+    raw.add_argument('--body')
+    raw.set_defaults(func=cmd_raw)
+
+    args = parser.parse_args()
+    args.func(args)
+
+
+if __name__ == '__main__':
+    main()

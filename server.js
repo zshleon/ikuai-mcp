@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env node
+#!/usr/bin/env node
 /**
  * iKuai Router MCP Server — 动态全量覆盖版
  * 自动支持基于 OpenAPI 规范提取的所有 API（400+ 个）
@@ -87,12 +87,69 @@ async function req(method, reqPath, body) {
 const toolsDefPath = path.join(__dirname, "tools.json");
 const TOOLS_DEFS = JSON.parse(fs.readFileSync(toolsDefPath, "utf-8"));
 
-const TOOLS = TOOLS_DEFS.map(t => {
+const FULL_TOOLS = TOOLS_DEFS.map(t => {
   const { _meta, ...mcpTool } = t;
   return mcpTool;
 });
 
 const TOOL_META = Object.fromEntries(TOOLS_DEFS.map(t => [t.name, t._meta]));
+const TOOL_DEF_BY_NAME = Object.fromEntries(TOOLS_DEFS.map(t => [t.name, t]));
+const MODE = (process.env.IKUAI_MCP_MODE || "compact").toLowerCase();
+const COMPACT_LIMIT = Number(process.env.IKUAI_MCP_COMPACT_LIMIT || "60");
+const COMPACT_KEYWORDS = [
+  "client", "host", "online", "interface", "ifstat", "wan", "lan", "dhcp",
+  "lease", "monitor", "traffic", "flow", "rate", "sysstat", "system", "dns",
+  "nat", "static", "route", "acl", "pppoe", "arp", "gateway", "connect", "status"
+];
+
+function toolHaystack(tool) {
+  const meta = TOOL_META[tool.name] || {};
+  return [tool.name, tool.description, meta.path, meta.method].filter(Boolean).join(" ").toLowerCase();
+}
+
+function isCompactDirectTool(tool) {
+  const meta = TOOL_META[tool.name] || {};
+  if (String(meta.method || "").toLowerCase() !== "get") return false;
+  const haystack = toolHaystack(tool);
+  const risky = ["backup", "restore", "upgrade", "reboot", "delete", "format", "reset"];
+  if (risky.some(keyword => haystack.includes(keyword))) return false;
+  return COMPACT_KEYWORDS.some(keyword => haystack.includes(keyword));
+}
+
+const DIRECT_TOOLS = MODE === "full"
+  ? FULL_TOOLS
+  : FULL_TOOLS.filter(isCompactDirectTool).slice(0, Number.isFinite(COMPACT_LIMIT) ? COMPACT_LIMIT : 60);
+
+const VIRTUAL_TOOLS = [
+  {
+    name: "ikuai_list_api_tools",
+    description: "Search/list all iKuai API tools without exposing every endpoint as a separate MCP tool. Use this first when you need an iKuai capability that is not in the compact direct tool list.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        query: { type: "string", description: "Keyword to search in tool name, description, method, or API path. Empty returns the first results." },
+        limit: { type: "number", description: "Maximum results to return. Default 30, max 100." }
+      }
+    }
+  },
+  {
+    name: "ikuai_call_api",
+    description: "Call any iKuai API endpoint. Prefer the 'tool' form after using ikuai_list_api_tools; use method/path only when you know the endpoint.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        tool: { type: "string", description: "Existing generated tool name from tools.json, for example getSystemBasicConfig." },
+        arguments: { type: "object", description: "Arguments for the named tool, including path/query/body fields when required." },
+        method: { type: "string", enum: ["GET", "POST", "PUT", "PATCH", "DELETE", "get", "post", "put", "patch", "delete"] },
+        path: { type: "string", description: "API path under /api/v4.0, for example /system/basic/config." },
+        query: { type: "object", description: "Query string parameters for method/path calls." },
+        body: { description: "JSON body for POST/PUT/PATCH method/path calls." }
+      }
+    }
+  }
+];
+
+const TOOLS = [...VIRTUAL_TOOLS, ...DIRECT_TOOLS];
 
 async function handle(name, args) {
   const meta = TOOL_META[name];
@@ -137,7 +194,7 @@ async function handle(name, args) {
 
 // ─── MCP Server 启动 ─────────────────────────────────────────────────────────
 const server = new Server(
-  { name: "ikuai-mcp", version: "3.0.0" },
+  { name: "ikuai-mcp", version: "3.1.0" },
   { capabilities: { tools: {} } }
 );
 
@@ -146,6 +203,48 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools: TOOLS }))
 server.setRequestHandler(CallToolRequestSchema, async (req) => {
   const { name, arguments: args } = req.params;
   try {
+    if (name === "ikuai_list_api_tools") {
+      const query = String((args || {}).query || "").toLowerCase();
+      const limitRaw = Number((args || {}).limit || 30);
+      const limit = Math.min(Math.max(Number.isFinite(limitRaw) ? limitRaw : 30, 1), 100);
+      const matches = FULL_TOOLS
+        .filter(tool => !query || toolHaystack(tool).includes(query))
+        .slice(0, limit)
+        .map(tool => {
+          const meta = TOOL_META[tool.name] || {};
+          return {
+            name: tool.name,
+            method: meta.method,
+            path: meta.path,
+            description: tool.description,
+            pathParams: meta.pathParams || [],
+            queryParams: meta.queryParams || [],
+            hasBody: !!meta.hasBody,
+          };
+        });
+      return { content: [{ type: "text", text: JSON.stringify({ totalAvailable: FULL_TOOLS.length, returned: matches.length, results: matches }, null, 2) }] };
+    }
+
+    if (name === "ikuai_call_api") {
+      const callArgs = args || {};
+      if (callArgs.tool) {
+        if (!TOOL_DEF_BY_NAME[callArgs.tool]) throw new Error(`未知工具: ${callArgs.tool}`);
+        const toolArgs = callArgs.arguments || callArgs.params || {};
+        const result = await handle(callArgs.tool, { ...toolArgs });
+        return { content: [{ type: "text", text: JSON.stringify(result, null, 2) }] };
+      }
+      const method = String(callArgs.method || "GET").toUpperCase();
+      const allowedMethods = new Set(["GET", "POST", "PUT", "PATCH", "DELETE"]);
+      if (!allowedMethods.has(method)) throw new Error(`不支持的 HTTP 方法: ${method}`);
+      let reqPath = String(callArgs.path || "");
+      if (!reqPath.startsWith("/")) throw new Error("path 必须以 / 开头，例如 /system/basic/config");
+      if (reqPath.startsWith("/api/v4.0/")) reqPath = reqPath.slice("/api/v4.0".length);
+      const qs = new URLSearchParams(callArgs.query || {}).toString();
+      const finalPath = qs ? `${reqPath}?${qs}` : reqPath;
+      const result = await req(method, finalPath, ["GET", "DELETE"].includes(method) ? undefined : callArgs.body);
+      return { content: [{ type: "text", text: JSON.stringify(result, null, 2) }] };
+    }
+
     const result = await handle(name, args || {});
     return { content: [{ type: "text", text: JSON.stringify(result, null, 2) }] };
   } catch (err) {
@@ -157,4 +256,4 @@ server.setRequestHandler(CallToolRequestSchema, async (req) => {
 });
 
 await server.connect(new StdioServerTransport());
-console.error(`iKuai MCP Server v3.0 已启动 (加载了 ${TOOLS.length} 个动态接口) — ${BASE}`);
+console.error(`iKuai MCP Server v3.1 已启动 (mode=${MODE}, exposed=${TOOLS.length}/${FULL_TOOLS.length}) — ${BASE}`);

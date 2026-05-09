@@ -3,3 +3,14 @@ node_modules/
 .env.*
 *.log
 .DS_Store
+*.tmp
+tmp/
+scratch/
+fast_test.js
+fix_tools.cjs
+grab_*.js
+list_clients.js
+slice.cjs
+test_*.js
+
+__pycache__/

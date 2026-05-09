@@ -716,9 +716,7 @@
     "description": "获取重启计划列表 - 获取当前配置的所有重启计划列表，支持分页功能。 包含计划状态、事件类型、周期策略、执行时间等信息。",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/system/reboot-schedules",
@@ -1817,7 +1815,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "key": {
           "type": "string",
           "description": "模糊匹配字段列表，支持 ssid, mac, ip_addr, termname, client_vendor, client_model"
@@ -1850,7 +1847,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "key": {
           "type": "string",
           "description": "模糊匹配字段列表，支持 ssid, mac, ip_addr, termname, client_vendor, client_model"
@@ -1883,7 +1879,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "key": {
           "type": "string",
           "description": "模糊匹配字段列表，支持 mac, ip_addr, termname, client_vendor, client_model"
@@ -1916,7 +1911,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "key": {
           "type": "string",
           "description": "模糊匹配字段列表，支持 mac, ip_addr, termname, client_vendor, client_model"
@@ -1948,9 +1942,7 @@
     "description": "获取终端当日流量统计 - 获取所有终端的当日流量统计信息，包括总流量、上行流量、 下行流量等汇总数据。支持分页功能，不支持key、pattern、filter。",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/monitoring/clients-traffic-summary",
@@ -2758,9 +2750,7 @@
     "description": "获取最近24小时应用协议流量统计 - 获取最近24小时的应用协议流量统计信息，包括应用名称、分类、 总流量、上下行流量等详细数据。支持分页查询，不支持key、pattern、filter。",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/monitoring/app-traffic-summary",
@@ -2837,9 +2827,7 @@
     "description": "获取当前应用协议速率使用详情 - 查询当前各应用协议的速率使用详情，包括当前连接数、上下行速率、总流量等。 支持分页查询，支持按上下行流量进行排序，不支持key、pattern、filter。",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/monitoring/app-protocols/load",
@@ -3028,9 +3016,7 @@
     "description": "获取无线流量统计 - 获取最近24小时内AP设备的无线流量统计数据，包括五分钟累计流量和实时上下行速率。 可通过apmac参数过滤指定AP的数据，不提供则汇总所有AP数据。",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/monitoring/wireless-traffic",
@@ -3060,9 +3046,7 @@
     "description": "获取SSID终端统计 - 获取各SSID的终端连接历史统计信息，按每小时汇总。 可通过ssid参数过滤指定SSID的数据，不提供则返回所有SSID数据。",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/monitoring/ssid-clients",
@@ -3077,9 +3061,7 @@
     "description": "获取信道终端统计 - 获取各信道的终端连接历史统计信息，按每小时汇总。 可通过channel参数过滤指定信道的数据，不提供则返回所有信道数据。",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/monitoring/channel-clients",
@@ -3094,9 +3076,7 @@
     "description": "获取高级自定义协议列表 - 获取所有高级自定义协议列表。 支持分页功能。",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/network/app-protocols/advanced/rules",
@@ -3333,7 +3313,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "filter": {
           "type": "string",
           "example": "enabled==yes",
@@ -3512,7 +3491,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "filter": {
           "type": "string",
           "example": "interface==lan1",
@@ -3536,7 +3514,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "filter": {
           "type": "string",
           "example": "interface==lan1",
@@ -3560,7 +3537,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "filter": {
           "type": "string",
           "example": "enabled==yes",
@@ -4376,7 +4352,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "filter": {
           "type": "string",
           "example": "enabled==yes",
@@ -4666,7 +4641,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "filter": {
           "type": "string",
           "example": "enabled==yes",
@@ -4842,9 +4816,7 @@
     "description": "获取DMZ策略列表 - 获取当前配置的DMZ策略列表，支持分页功能。 包含策略名称、外网接口、内网地址、排除协议、排除端口等信息。",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/network/dmz/rules",
@@ -5069,9 +5041,7 @@
     "description": "获取所有DNAT规则 - 获取当前配置的端口映射规则列表，支持分页功能。 包含规则名称、内外网端口、协议、启用状态等信息。",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/network/dnat/rules",
@@ -5555,9 +5525,7 @@
     "description": "获取DNS代理规则列表 - 获取当前配置的DNS代理规则列表，支持分页和过滤功能。 包含域名、解析IP地址、启用状态、备注等信息。",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/network/dns/proxy/rules",
@@ -5775,9 +5743,7 @@
     "description": "获取多线DNS策略列表 - 获取当前配置的多线DNS策略列表，支持分页功能。 每个WAN口线路可以自定义上级DNS服务器地址。",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/network/multi-dns/rules",
@@ -6126,9 +6092,7 @@
     "description": "获取NAT规则列表 - 获取当前配置的NAT规则列表，支持分页功能。 包含规则名称、动作类型、接口配置、地址配置、端口配置等信息。",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/network/nat/rules",
@@ -6894,9 +6858,7 @@
     "description": "获取自定义协议策略列表 - 获取所有自定义协议策略列表。 支持分页功能。",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/network/app-protocols/custom/rules",
@@ -6936,10 +6898,60 @@
           "example": "11"
         },
         "src_addr": {
-          "$ref": "#/components/schemas/AddressFilter"
+          "type": "object",
+          "properties": {
+            "custom": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "object": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "integer"
+                  },
+                  "gid": {
+                    "type": "string"
+                  },
+                  "gp_name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
         },
         "dst_addr": {
-          "$ref": "#/components/schemas/AddressFilter"
+          "type": "object",
+          "properties": {
+            "custom": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "object": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "integer"
+                  },
+                  "gid": {
+                    "type": "string"
+                  },
+                  "gp_name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
         },
         "protocol": {
           "type": "string",
@@ -6954,10 +6966,60 @@
           "example": "udp"
         },
         "src_port": {
-          "$ref": "#/components/schemas/PortFilter"
+          "type": "object",
+          "properties": {
+            "custom": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "object": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "integer"
+                  },
+                  "gid": {
+                    "type": "string"
+                  },
+                  "gp_name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
         },
         "dst_port": {
-          "$ref": "#/components/schemas/PortFilter"
+          "type": "object",
+          "properties": {
+            "custom": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "object": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "integer"
+                  },
+                  "gid": {
+                    "type": "string"
+                  },
+                  "gp_name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
         },
         "class": {
           "type": "integer",
@@ -7027,10 +7089,60 @@
           "example": "11"
         },
         "src_addr": {
-          "$ref": "#/components/schemas/AddressFilter"
+          "type": "object",
+          "properties": {
+            "custom": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "object": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "integer"
+                  },
+                  "gid": {
+                    "type": "string"
+                  },
+                  "gp_name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
         },
         "dst_addr": {
-          "$ref": "#/components/schemas/AddressFilter"
+          "type": "object",
+          "properties": {
+            "custom": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "object": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "integer"
+                  },
+                  "gid": {
+                    "type": "string"
+                  },
+                  "gp_name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
         },
         "protocol": {
           "type": "string",
@@ -7045,10 +7157,60 @@
           "example": "udp"
         },
         "src_port": {
-          "$ref": "#/components/schemas/PortFilter"
+          "type": "object",
+          "properties": {
+            "custom": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "object": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "integer"
+                  },
+                  "gid": {
+                    "type": "string"
+                  },
+                  "gp_name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
         },
         "dst_port": {
-          "$ref": "#/components/schemas/PortFilter"
+          "type": "object",
+          "properties": {
+            "custom": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "object": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "integer"
+                  },
+                  "gid": {
+                    "type": "string"
+                  },
+                  "gp_name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
         },
         "class": {
           "type": "integer",
@@ -8286,9 +8448,7 @@
     "description": "获取VLAN接口配置列表 - 查询VLAN接口配置列表，支持分页、关键字模糊匹配和字段过滤。",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/network/vlan",
@@ -8549,19 +8709,19 @@
           "description": "WAN接口配置更新请求体，按 `internet` 接入模式选择对应的参数结构：\n- `internet=0`（静态IP）：必填 `ip_mask`、`gateway` 及链路参数\n- `internet=1`（DHCP）：必填链路参数，可选 DHCP 扩展参数\n- `internet=2`（ADSL/PPPoE）：必填 `username`、`password` 及链路参数\n- `internet=3`（基于物理网卡混合模式）：子接口在 wan-vlan-config 中配置，可选多拨助手参数\n- `internet=4`（基于VLAN混合模式）：子接口在 wan-vlan-config 中配置\n",
           "oneOf": [
             {
-              "$ref": "#/components/schemas/WanConfigStaticIPRequest"
+              "type": "object"
             },
             {
-              "$ref": "#/components/schemas/WanConfigDHCPRequest"
+              "type": "object"
             },
             {
-              "$ref": "#/components/schemas/WanConfigPPPoERequest"
+              "type": "object"
             },
             {
-              "$ref": "#/components/schemas/WanConfigMixedPhysicalRequest"
+              "type": "object"
             },
             {
-              "$ref": "#/components/schemas/WanConfigMixedVLANRequest"
+              "type": "object"
             }
           ]
         }
@@ -8796,9 +8956,7 @@
     "description": "获取IP对象列表 - 获取所有IP对象策略列表。 支持分页功能。",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/ip-objects",
@@ -8826,7 +8984,7 @@
           "type": "array",
           "description": "对象内容列表",
           "items": {
-            "$ref": "#/components/schemas/IpObjectValue"
+            "type": "object"
           },
           "minItems": 1,
           "maxItems": 100,
@@ -8888,7 +9046,7 @@
           "type": "array",
           "description": "对象内容列表",
           "items": {
-            "$ref": "#/components/schemas/IpObjectValue"
+            "type": "object"
           },
           "minItems": 1,
           "maxItems": 100,
@@ -9157,9 +9315,7 @@
     "description": "获取MAC对象列表 - 获取所有MAC对象策略列表。 支持分页功能。",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/mac-objects",
@@ -9187,7 +9343,7 @@
           "type": "array",
           "description": "对象内容列表",
           "items": {
-            "$ref": "#/components/schemas/MacObjectValue"
+            "type": "object"
           },
           "minItems": 1,
           "maxItems": 100,
@@ -9245,7 +9401,7 @@
           "type": "array",
           "description": "对象内容列表",
           "items": {
-            "$ref": "#/components/schemas/MacObjectValue"
+            "type": "object"
           },
           "minItems": 1,
           "maxItems": 100,
@@ -9705,9 +9861,7 @@
     "description": "获取时间对象列表 - 获取所有时间对象策略列表。 支持分页功能。",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/time-objects",
@@ -9735,7 +9889,7 @@
           "type": "array",
           "description": "对象内容列表",
           "items": {
-            "$ref": "#/components/schemas/TimeObjectValue"
+            "type": "object"
           },
           "minItems": 1,
           "maxItems": 100,
@@ -9802,7 +9956,7 @@
           "type": "array",
           "description": "对象内容列表",
           "items": {
-            "$ref": "#/components/schemas/TimeObjectValue"
+            "type": "object"
           },
           "minItems": 1,
           "maxItems": 100,
@@ -9883,9 +10037,7 @@
     "description": "获取所有静态路由策略 - 获取当前配置的所有静态路由策略列表。 支持分页、过滤和排序功能。",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/routing/static-routes",
@@ -9986,9 +10138,7 @@
     "description": "获取指定静态路由策略 - 获取指定ID的静态路由策略详细信息",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/routing/static-routes/{id}",
@@ -10004,7 +10154,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "enabled": {
           "type": "string",
           "enum": [
@@ -10093,7 +10242,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "enabled": {
           "type": "string",
           "enum": [
@@ -10120,9 +10268,7 @@
     "description": "删除静态路由策略 - 删除指定ID的静态路由策略",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/routing/static-routes/{id}",
@@ -10137,9 +10283,7 @@
     "description": "获取所有域名分流策略 - 获取当前配置的所有域名分流策略列表。 支持分页、过滤和排序功能。",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/routing/domain-rules",
@@ -10178,7 +10322,7 @@
           "default": ""
         },
         "domain": {
-          "$ref": "#/components/schemas/DomainObjectInput"
+          "type": "object"
         },
         "interface": {
           "type": "string",
@@ -10194,10 +10338,10 @@
           "example": 31
         },
         "src_addr": {
-          "$ref": "#/components/schemas/SrcAddrObjectInput"
+          "type": "object"
         },
         "time": {
-          "$ref": "#/components/schemas/TimeObjectInput"
+          "type": "object"
         }
       },
       "required": [
@@ -10278,7 +10422,7 @@
           "default": ""
         },
         "domain": {
-          "$ref": "#/components/schemas/DomainObjectInput"
+          "type": "object"
         },
         "interface": {
           "type": "string",
@@ -10294,10 +10438,10 @@
           "example": 31
         },
         "src_addr": {
-          "$ref": "#/components/schemas/SrcAddrObjectInput"
+          "type": "object"
         },
         "time": {
-          "$ref": "#/components/schemas/TimeObjectInput"
+          "type": "object"
         }
       },
       "required": [
@@ -10387,9 +10531,7 @@
     "description": "获取所有端口分流策略 - 获取当前配置的所有端口分流策略列表。 支持分页、过滤和排序功能。",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/routing/five-tuple-rules",
@@ -10469,10 +10611,10 @@
           "example": 31
         },
         "src_addr": {
-          "$ref": "#/components/schemas/SrcAddrObjectInput"
+          "type": "object"
         },
         "dst_addr": {
-          "$ref": "#/components/schemas/DstAddrObjectInput"
+          "type": "object"
         },
         "protocol": {
           "type": "string",
@@ -10487,10 +10629,10 @@
           "example": "tcp"
         },
         "src_port": {
-          "$ref": "#/components/schemas/PortObjectInput"
+          "type": "object"
         },
         "dst_port": {
-          "$ref": "#/components/schemas/PortObjectInput"
+          "type": "object"
         },
         "dst_type": {
           "type": "integer",
@@ -10516,7 +10658,7 @@
           "default": 0
         },
         "time": {
-          "$ref": "#/components/schemas/TimeObjectInput"
+          "type": "object"
         },
         "src_addr_inv": {
           "type": "integer",
@@ -10666,10 +10808,10 @@
           "example": 31
         },
         "src_addr": {
-          "$ref": "#/components/schemas/SrcAddrObjectInput"
+          "type": "object"
         },
         "dst_addr": {
-          "$ref": "#/components/schemas/DstAddrObjectInput"
+          "type": "object"
         },
         "protocol": {
           "type": "string",
@@ -10684,10 +10826,10 @@
           "example": "tcp"
         },
         "src_port": {
-          "$ref": "#/components/schemas/PortObjectInput"
+          "type": "object"
         },
         "dst_port": {
-          "$ref": "#/components/schemas/PortObjectInput"
+          "type": "object"
         },
         "dst_type": {
           "type": "integer",
@@ -10713,7 +10855,7 @@
           "default": 0
         },
         "time": {
-          "$ref": "#/components/schemas/TimeObjectInput"
+          "type": "object"
         },
         "src_addr_inv": {
           "type": "integer",
@@ -10831,9 +10973,7 @@
     "description": "获取所有协议分流策略 - 获取当前配置的所有协议分流策略列表。 支持分页、过滤和排序功能。",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/routing/app-protocols",
@@ -10895,10 +11035,10 @@
           "example": 1
         },
         "src_addr": {
-          "$ref": "#/components/schemas/SrcAddrObjectInput"
+          "type": "object"
         },
         "app_proto": {
-          "$ref": "#/components/schemas/AppProtoObjectInput"
+          "type": "object"
         },
         "iface_band": {
           "type": "integer",
@@ -10910,7 +11050,7 @@
           "default": 0
         },
         "time": {
-          "$ref": "#/components/schemas/TimeObjectInput"
+          "type": "object"
         }
       },
       "required": [
@@ -10936,9 +11076,7 @@
     "description": "获取指定协议分流策略 - 获取指定ID的协议分流策略详细信息",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/routing/app-protocols/{id}",
@@ -10954,7 +11092,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "enabled": {
           "type": "string",
           "enum": [
@@ -11001,10 +11138,10 @@
           "example": 1
         },
         "src_addr": {
-          "$ref": "#/components/schemas/SrcAddrObjectInput"
+          "type": "object"
         },
         "app_proto": {
-          "$ref": "#/components/schemas/AppProtoObjectInput"
+          "type": "object"
         },
         "iface_band": {
           "type": "integer",
@@ -11016,7 +11153,7 @@
           "default": 0
         },
         "time": {
-          "$ref": "#/components/schemas/TimeObjectInput"
+          "type": "object"
         }
       },
       "required": [
@@ -11043,7 +11180,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "enabled": {
           "type": "string",
           "enum": [
@@ -11070,9 +11206,7 @@
     "description": "删除协议分流策略 - 删除指定ID的协议分流策略",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/routing/app-protocols/{id}",
@@ -11087,9 +11221,7 @@
     "description": "获取所有多线负载分流策略 - 获取当前配置的所有多线负载分流策略列表。 支持分页、过滤和排序功能。",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/routing/load-balance-rules",
@@ -11183,9 +11315,7 @@
     "description": "获取指定多线负载分流策略 - 获取指定ID的多线负载分流策略详细信息",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/routing/load-balance-rules/{id}",
@@ -11201,7 +11331,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "enabled": {
           "type": "string",
           "enum": [
@@ -11281,7 +11410,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "enabled": {
           "type": "string",
           "enum": [
@@ -11308,9 +11436,7 @@
     "description": "删除多线负载分流策略 - 删除指定ID的多线负载分流策略",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/routing/load-balance-rules/{id}",
@@ -11325,9 +11451,7 @@
     "description": "获取所有上下行分离策略 - 获取当前配置的所有上下行分离策略列表。 支持分页、过滤和排序功能。",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/routing/updown",
@@ -11377,10 +11501,10 @@
           "example": "wan2"
         },
         "src_addr": {
-          "$ref": "#/components/schemas/SrcAddrObjectInput"
+          "type": "object"
         },
         "dst_addr": {
-          "$ref": "#/components/schemas/DstAddrObjectInput"
+          "type": "object"
         },
         "protocol": {
           "type": "string",
@@ -11396,10 +11520,10 @@
           "example": "tcp"
         },
         "src_port": {
-          "$ref": "#/components/schemas/PortObjectInput"
+          "type": "object"
         },
         "dst_port": {
-          "$ref": "#/components/schemas/PortObjectInput"
+          "type": "object"
         }
       },
       "required": [
@@ -11490,10 +11614,10 @@
           "example": "wan2"
         },
         "src_addr": {
-          "$ref": "#/components/schemas/SrcAddrObjectInput"
+          "type": "object"
         },
         "dst_addr": {
-          "$ref": "#/components/schemas/DstAddrObjectInput"
+          "type": "object"
         },
         "protocol": {
           "type": "string",
@@ -11509,10 +11633,10 @@
           "example": "tcp"
         },
         "src_port": {
-          "$ref": "#/components/schemas/PortObjectInput"
+          "type": "object"
         },
         "dst_port": {
-          "$ref": "#/components/schemas/PortObjectInput"
+          "type": "object"
         }
       },
       "required": [
@@ -12161,7 +12285,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "key": {
           "type": "string",
           "enum": [
@@ -12543,7 +12666,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "key": {
           "type": "string",
           "enum": [
@@ -13160,7 +13282,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "key": {
           "type": "string",
           "enum": [
@@ -13637,7 +13758,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "key": {
           "type": "string",
           "enum": [
@@ -14279,7 +14399,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "key": {
           "type": "string",
           "enum": [
@@ -14696,7 +14815,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "key": {
           "type": "string",
           "enum": [
@@ -14985,7 +15103,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "key": {
           "type": "string",
           "enum": [
@@ -17328,9 +17445,7 @@
     "description": "获取无线黑白名单列表 - 获取当前配置的无线黑白名单规则列表，支持分页功能。 包含规则状态、模式、MAC地址列表、SSID、AP、时间控制等信息。",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/wireless/access-control/rules",
@@ -17373,7 +17488,7 @@
           "example": 0
         },
         "lmac": {
-          "$ref": "#/components/schemas/MacList"
+          "type": "object"
         },
         "lssid": {
           "type": "string",
@@ -17476,7 +17591,7 @@
           "example": 0
         },
         "lmac": {
-          "$ref": "#/components/schemas/MacList"
+          "type": "object"
         },
         "lssid": {
           "type": "string",
@@ -17576,9 +17691,7 @@
     "description": "获取无线终端VLAN列表 - 获取当前配置的无线终端VLAN规则列表，支持分页功能。 包含规则状态、VLAN ID、MAC地址列表、SSID配置等信息。",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/wireless/vlan/rules",
@@ -17619,7 +17732,7 @@
           "example": 11
         },
         "lmac": {
-          "$ref": "#/components/schemas/MacList"
+          "type": "object"
         },
         "lssid": {
           "type": "string",
@@ -17697,7 +17810,7 @@
           "example": 11
         },
         "lmac": {
-          "$ref": "#/components/schemas/MacList"
+          "type": "object"
         },
         "lssid": {
           "type": "string",
@@ -17872,16 +17985,16 @@
           "example": "drop"
         },
         "app_proto": {
-          "$ref": "#/components/schemas/AppProtocolObject"
+          "type": "object"
         },
         "src_addr": {
-          "$ref": "#/components/schemas/AddressObject"
+          "type": "object"
         },
         "dst_addr": {
-          "$ref": "#/components/schemas/AddressObject"
+          "type": "object"
         },
         "time": {
-          "$ref": "#/components/schemas/TimeObject"
+          "type": "object"
         }
       },
       "required": [
@@ -17977,16 +18090,16 @@
           "example": "drop"
         },
         "app_proto": {
-          "$ref": "#/components/schemas/AppProtocolObject"
+          "type": "object"
         },
         "src_addr": {
-          "$ref": "#/components/schemas/AddressObject"
+          "type": "object"
         },
         "dst_addr": {
-          "$ref": "#/components/schemas/AddressObject"
+          "type": "object"
         },
         "time": {
-          "$ref": "#/components/schemas/TimeObject"
+          "type": "object"
         }
       },
       "required": [
@@ -18205,7 +18318,7 @@
           "example": "111"
         },
         "time": {
-          "$ref": "#/components/schemas/TimeObject"
+          "type": "object"
         },
         "expires": {
           "type": "integer",
@@ -18298,7 +18411,7 @@
           "example": "111"
         },
         "time": {
-          "$ref": "#/components/schemas/TimeObject"
+          "type": "object"
         },
         "expires": {
           "type": "integer",
@@ -18496,7 +18609,7 @@
           "example": "any"
         },
         "src_addr": {
-          "$ref": "#/components/schemas/AddressObject"
+          "type": "object"
         },
         "src_addr_inv": {
           "type": "integer",
@@ -18509,7 +18622,7 @@
           "example": 0
         },
         "dst_addr": {
-          "$ref": "#/components/schemas/AddressObject"
+          "type": "object"
         },
         "dst_addr_inv": {
           "type": "integer",
@@ -18552,10 +18665,10 @@
           "example": "US"
         },
         "src6_addr": {
-          "$ref": "#/components/schemas/AddressObject"
+          "type": "object"
         },
         "dst6_addr": {
-          "$ref": "#/components/schemas/AddressObject"
+          "type": "object"
         },
         "src6_mode": {
           "type": "integer",
@@ -18609,13 +18722,13 @@
           "example": "any"
         },
         "src_port": {
-          "$ref": "#/components/schemas/PortObject"
+          "type": "object"
         },
         "dst_port": {
-          "$ref": "#/components/schemas/PortObject"
+          "type": "object"
         },
         "time": {
-          "$ref": "#/components/schemas/TimeObject"
+          "type": "object"
         },
         "ip_type": {
           "type": "string",
@@ -18750,10 +18863,10 @@
           "example": "any"
         },
         "src_addr": {
-          "$ref": "#/components/schemas/AddressObject"
+          "type": "object"
         },
         "dst_addr": {
-          "$ref": "#/components/schemas/AddressObject"
+          "type": "object"
         },
         "src_addr_inv": {
           "type": "integer",
@@ -18802,10 +18915,10 @@
           "example": ""
         },
         "src6_addr": {
-          "$ref": "#/components/schemas/AddressObject"
+          "type": "object"
         },
         "dst6_addr": {
-          "$ref": "#/components/schemas/AddressObject"
+          "type": "object"
         },
         "src6_mode": {
           "type": "integer",
@@ -18857,13 +18970,13 @@
           "example": "any"
         },
         "src_port": {
-          "$ref": "#/components/schemas/PortObject"
+          "type": "object"
         },
         "dst_port": {
-          "$ref": "#/components/schemas/PortObject"
+          "type": "object"
         },
         "time": {
-          "$ref": "#/components/schemas/TimeObject"
+          "type": "object"
         },
         "ip_type": {
           "type": "string",
@@ -19216,10 +19329,10 @@
           "example": "购物网站"
         },
         "src_addr": {
-          "$ref": "#/components/schemas/AddressObject"
+          "type": "object"
         },
         "time": {
-          "$ref": "#/components/schemas/TimeObject"
+          "type": "object"
         }
       },
       "required": [
@@ -19298,10 +19411,10 @@
           "example": "购物网站"
         },
         "src_addr": {
-          "$ref": "#/components/schemas/AddressObject"
+          "type": "object"
         },
         "time": {
-          "$ref": "#/components/schemas/TimeObject"
+          "type": "object"
         }
       },
       "required": [
@@ -19415,7 +19528,7 @@
           "example": 0
         },
         "nol2rt_ip": {
-          "$ref": "#/components/schemas/AddressObject"
+          "type": "object"
         },
         "ttl_num": {
           "type": "integer",
@@ -19426,7 +19539,7 @@
           "example": 1
         },
         "time": {
-          "$ref": "#/components/schemas/TimeObject"
+          "type": "object"
         }
       },
       "required": [
@@ -19727,7 +19840,7 @@
           "example": "111"
         },
         "src_addr": {
-          "$ref": "#/components/schemas/AddressObject"
+          "type": "object"
         },
         "protocol": {
           "type": "string",
@@ -19742,7 +19855,7 @@
           "example": "udp"
         },
         "dst_port": {
-          "$ref": "#/components/schemas/PortObject"
+          "type": "object"
         },
         "limits": {
           "type": "integer",
@@ -19752,7 +19865,7 @@
           "example": 10000
         },
         "time": {
-          "$ref": "#/components/schemas/TimeObject"
+          "type": "object"
         }
       },
       "required": [
@@ -19827,7 +19940,7 @@
           "example": "111"
         },
         "src_addr": {
-          "$ref": "#/components/schemas/AddressObject"
+          "type": "object"
         },
         "protocol": {
           "type": "string",
@@ -19842,7 +19955,7 @@
           "example": "udp"
         },
         "dst_port": {
-          "$ref": "#/components/schemas/PortObject"
+          "type": "object"
         },
         "limits": {
           "type": "integer",
@@ -19852,7 +19965,7 @@
           "example": 10000
         },
         "time": {
-          "$ref": "#/components/schemas/TimeObject"
+          "type": "object"
         }
       },
       "required": [
@@ -20026,13 +20139,13 @@
           "example": "0"
         },
         "domain": {
-          "$ref": "#/components/schemas/DomainObject"
+          "type": "object"
         },
         "src_addr": {
-          "$ref": "#/components/schemas/AddressObject"
+          "type": "object"
         },
         "time": {
-          "$ref": "#/components/schemas/TimeObject"
+          "type": "object"
         }
       },
       "required": [
@@ -20116,13 +20229,13 @@
           "example": "0"
         },
         "domain": {
-          "$ref": "#/components/schemas/DomainObject"
+          "type": "object"
         },
         "src_addr": {
-          "$ref": "#/components/schemas/AddressObject"
+          "type": "object"
         },
         "time": {
-          "$ref": "#/components/schemas/TimeObject"
+          "type": "object"
         }
       },
       "required": [
@@ -20291,7 +20404,7 @@
           "example": ""
         },
         "src_addr": {
-          "$ref": "#/components/schemas/AddressObject"
+          "type": "object"
         },
         "src_url": {
           "type": "string",
@@ -20330,7 +20443,7 @@
           "example": 100
         },
         "time": {
-          "$ref": "#/components/schemas/TimeObject"
+          "type": "object"
         }
       },
       "required": [
@@ -20406,7 +20519,7 @@
           "example": 1
         },
         "src_addr": {
-          "$ref": "#/components/schemas/AddressObject"
+          "type": "object"
         },
         "src_url": {
           "type": "string",
@@ -20449,7 +20562,7 @@
           "example": 100
         },
         "time": {
-          "$ref": "#/components/schemas/TimeObject"
+          "type": "object"
         },
         "tagname": {
           "type": "string",
@@ -20629,7 +20742,7 @@
           "example": ""
         },
         "src_addr": {
-          "$ref": "#/components/schemas/AddressObject"
+          "type": "object"
         },
         "src_url": {
           "type": "string",
@@ -20663,7 +20776,7 @@
           "example": 100
         },
         "time": {
-          "$ref": "#/components/schemas/TimeObject"
+          "type": "object"
         }
       },
       "required": [
@@ -20738,7 +20851,7 @@
           "example": 32
         },
         "src_addr": {
-          "$ref": "#/components/schemas/AddressObject"
+          "type": "object"
         },
         "src_url": {
           "type": "string",
@@ -20772,7 +20885,7 @@
           "example": 100
         },
         "time": {
-          "$ref": "#/components/schemas/TimeObject"
+          "type": "object"
         },
         "tagname": {
           "type": "string",
@@ -20950,7 +21063,7 @@
           "example": "111"
         },
         "src_addr": {
-          "$ref": "#/components/schemas/AddressObject"
+          "type": "object"
         },
         "src_url": {
           "type": "string",
@@ -20989,7 +21102,7 @@
           "example": 100
         },
         "time": {
-          "$ref": "#/components/schemas/TimeObject"
+          "type": "object"
         }
       },
       "required": [
@@ -21065,7 +21178,7 @@
           "example": 1
         },
         "src_addr": {
-          "$ref": "#/components/schemas/AddressObject"
+          "type": "object"
         },
         "src_url": {
           "type": "string",
@@ -21108,7 +21221,7 @@
           "example": 100
         },
         "time": {
-          "$ref": "#/components/schemas/TimeObject"
+          "type": "object"
         },
         "tagname": {
           "type": "string",
@@ -22551,7 +22664,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "enabled": {
           "type": "string",
           "description": "用户状态",
@@ -22634,7 +22746,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "enabled": {
           "type": "string",
           "description": "用户状态",
@@ -22662,9 +22773,7 @@
     "description": "删除FTP用户 - 删除指定的FTP用户账户。",
     "inputSchema": {
       "type": "object",
-      "properties": {
-        "undefined": {}
-      }
+      "properties": {}
     },
     "_meta": {
       "path": "/api/v4.0/advanced-service/ftp-users/{id}",
@@ -23473,7 +23582,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "key": {
           "type": "string",
           "description": "模糊匹配字段列表，支持 content"
@@ -23521,7 +23629,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "key": {
           "type": "string",
           "description": "模糊匹配字段列表，支持 username, macip, ip_addr"
@@ -23569,7 +23676,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "filter": {
           "type": "string",
           "description": "过滤条件，支持精确匹配和多条件组合。\n\n支持的操作符：\n- \"==（等于）\"\n- \"!=（不等于）\"\n- \">（大于）\"\n- \">=（大于等于）\"\n- \"<（小于）\"\n- \"<=（小于等于）\"\n\n多条件连接语法：\n- AND逻辑：filter=field1==value1&filter=field2==value2\n- OR逻辑：filter=field1==value1,field2==value2\n\n使用示例：\n- 单条件：filter=status==success\n- AND条件：filter=status==success&filter=domain==example.com\n- OR条件：filter=status==success,status==failure\n- 时间范围：filter=timestamp>1763450000&filter=timestamp<1763455000\n"
@@ -23617,7 +23723,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "filter": {
           "type": "string",
           "description": "过滤条件，支持精确匹配和多条件组合。\n\n支持的操作符：\n- \"==（等于）\"\n- \"!=（不等于）\"\n- \">（大于）\"\n- \">=（大于等于）\"\n- \"<（小于）\"\n- \"<=（小于等于）\"\n\n多条件连接语法：\n- AND逻辑：filter=field1==value1&filter=field2==value2\n- OR逻辑：filter=field1==value1,field2==value2\n\n使用示例：\n- 单条件：filter=msgtype==DHCPACK\n- AND条件：filter=msgtype==DHCPACK&filter=interface==lan1\n- OR条件：filter=msgtype==DHCPACK,msgtype==DHCPOFFER\n- MAC地址过滤：filter=mac==a6:8d:9a:61:96:90\n- 时间范围：filter=timestamp>1761842000&filter=timestamp<1761843000\n"
@@ -23665,7 +23770,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "filter": {
           "type": "string",
           "description": "过滤条件，支持精确匹配和多条件组合。\n\n支持的操作符：\n- \"==（等于）\"\n- \"!=（不等于）\"\n- \">（大于）\"\n- \">=（大于等于）\"\n- \"<（小于）\"\n- \"<=（小于等于）\"\n\n多条件连接语法：\n- AND逻辑：filter=field1==value1&filter=field2==value2\n- OR逻辑：filter=field1==value1,field2==value2\n\n使用示例：\n- 单条件：filter=type==email\n- AND条件：filter=type==email&filter=ip_addr==192.168.1.100\n- OR条件：filter=type==email,type==sms\n- 事件过滤：filter=event==通知发送成功\n- 时间范围：filter=timestamp>1762342000&filter=timestamp<1762343000\n"
@@ -23713,7 +23817,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "filter": {
           "type": "string",
           "description": "过滤条件，支持精确匹配和多条件组合。\n\n支持的操作符：\n- \"==（等于）\"\n- \"!=（不等于）\"\n- \">（大于）\"\n- \">=（大于等于）\"\n- \"<（小于）\"\n- \"<=（小于等于）\"\n\n多条件连接语法：\n- AND逻辑：filter=field1==value1&filter=field2==value2\n- OR逻辑：filter=field1==value1,field2==value2\n\n使用示例：\n- 单条件：filter=interface==adsl1\n- AND条件：filter=interface==adsl1&filter=content==pppd\n- OR条件：filter=interface==adsl1,interface==wan2_1\n- 内容过滤：filter=content==Connected\n- 时间范围：filter=timestamp>1762342000&filter=timestamp<1762343000\n"
@@ -23761,7 +23864,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "filter": {
           "type": "string",
           "description": "过滤条件，支持精确匹配和多条件组合。\n\n支持的操作符：\n- \"==（等于）\"\n- \"!=（不等于）\"\n- \">（大于）\"\n- \">=（大于等于）\"\n- \"<（小于）\"\n- \"<=（小于等于）\"\n\n多条件连接语法：\n- AND逻辑：filter=field1==value1&filter=field2==value2\n- OR逻辑：filter=field1==value1,field2==value2\n\n使用示例：\n- 单条件：filter=level==error\n- AND条件：filter=level==error&filter=module==system\n- OR条件：filter=level==error,level==warning\n- 模块过滤：filter=module==kernel\n- 时间范围：filter=timestamp>1763450000&filter=timestamp<1763455000\n"
@@ -23809,7 +23911,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "filter": {
           "type": "string",
           "description": "过滤条件，支持精确匹配和多条件组合。\n\n支持的操作符：\n- \"==（等于）\"\n- \"!=（不等于）\"\n- \">（大于）\"\n- \">=（大于等于）\"\n- \"<（小于）\"\n- \"<=（小于等于）\"\n\n多条件连接语法：\n- AND逻辑：filter=field1==value1&filter=field2==value2\n- OR逻辑：filter=field1==value1,field2==value2\n\n使用示例：\n- 单条件：filter=event==登录\n- AND条件：filter=event==登录&filter=username==admin\n- OR条件：filter=event==登录,event==登出\n- 用户过滤：filter=username==admin\n- IP地址过滤：filter=ip_addr==192.168.99.101\n- 时间范围：filter=timestamp>1763779000&filter=timestamp<1763780000\n"
@@ -23857,7 +23958,6 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "undefined": {},
         "key": {
           "type": "string",
           "description": "模糊匹配字段列表，支持 mac, ssid, errmsg, mac_comment, apmac_comment"

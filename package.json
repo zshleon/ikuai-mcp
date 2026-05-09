@@ -1,19 +1,30 @@
 {
   "name": "ikuai-mcp",
-  "version": "2.1.0",
-  "description": "iKuai Router MCP Server — 爱快路由器AI管理工具，覆盖全部API（126个工具）",
+  "version": "3.1.0",
+  "description": "iKuai Router MCP Server with compact/on-demand API access for AI agents",
   "type": "module",
   "main": "server.js",
   "bin": {
-    "ikuai-mcp": "./server.js"
+    "ikuai-mcp": "./server.js",
+    "ikuai-ai": "./scripts/ikuai-ai"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "check": "node --check server.js",
+    "ikuai-ai": "python3 scripts/ikuai-ai"
   },
   "engines": {
     "node": ">=18.0.0"
   },
-  "keywords": ["ikuai", "mcp", "router", "homelab", "ai", "claude", "mcp-server"],
+  "keywords": [
+    "ikuai",
+    "mcp",
+    "router",
+    "homelab",
+    "ai",
+    "claude",
+    "mcp-server"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
